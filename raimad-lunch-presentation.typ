@@ -1,10 +1,13 @@
 #import "@preview/plotst:0.2.0": *
 #import "@preview/touying:0.6.1": *
+#import "@preview/codly:1.2.0": *
 //#import themes.simple: *
 #import themes.stargazer: *
 
+#show: codly-init.with()
+
 // Change font size of code blocks
-#show raw: set text(12pt)
+#show raw: set text(10pt)
 
 #show: stargazer-theme.with(
   aspect-ratio: "16-9",
@@ -18,29 +21,6 @@
   ),
 )
 
-#let highlight_lines(codeblock, lines) = {
-  let lineno = 1
-  let lang = none
-  let color = gray
-  for line in codeblock.text.split("\n") {
-    lineno = lineno + 1
-    if lines == none or lineno in lines {
-      lang = codeblock.lang
-      color = black
-    } else {
-      lang = none
-      color = gray
-    }
-    text(color)[
-      #raw(
-        line,
-        block: true,
-        lang: lang
-      )
-    ]
-    v(-4pt)
-  }
-}
 
 #let overlay(img, color) = layout(bounds => {
   let size = measure(img, ..bounds)
@@ -64,6 +44,12 @@
 ][
   #image("img/pyclewin.png", width: 100%)
 ]
+
+== RAIMAD and Collaborative Design
+
+- Low barrier to entry
+- Uniform component interface
+- Standard Python practices
 
 == What does it look like?
 
@@ -100,7 +86,13 @@ rai.show(my_filter)
 
 #slide[
 
-#highlight_lines(
+#codly(
+  highlight-inset: 0pt,
+  highlight-outset: 3.5pt,
+  highlights: (
+    (line: 9, start: 9, end: none, fill: red,),
+    (line: 10, start: 9, end: none, fill: red),
+))
 ```python
 import raimad as rai
 
@@ -119,9 +111,7 @@ class IShapedFilter(rai.Compo):
 
 my_filter = IShapedFilter()
 rai.show(my_filter)
-```,
-(10, 11)
-)
+```
 
 ][
 
